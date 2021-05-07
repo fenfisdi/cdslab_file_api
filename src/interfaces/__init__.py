@@ -1,4 +1,8 @@
-from .folder import FolderInterface
+from .folder import SimulationFolderInterface, UserFolderInterface
 from .user import UserInterface
 
-__all__ = ['FolderInterface', 'UserInterface']
+__all__ = [
+    'SimulationFolderInterface',
+    'UserFolderInterface',
+    'UserInterface'
+]
