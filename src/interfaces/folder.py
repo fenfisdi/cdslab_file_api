@@ -29,7 +29,7 @@ class SimulationFolderInterface:
     @staticmethod
     def find_one_by_simulation(uuid: UUID, user: User):
         filters = dict(
-            simulation_id=uuid,
+            simulation_uuid=uuid,
             user_id=user,
             is_deleted=False,
         )

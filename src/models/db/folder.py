@@ -1,4 +1,8 @@
-from mongoengine import UUIDField, ReferenceField, BooleanField
+from mongoengine import (
+    UUIDField,
+    ReferenceField,
+    BooleanField
+)
 
 from .base import BaseDocument
 from .user import User
@@ -11,8 +15,7 @@ class UserFolder(BaseDocument):
 
 
 class SimulationFolder(BaseDocument):
-    uuid = UUIDField(unique=True)
-    simulation_id = UUIDField(unique=True)
+    simulation_uuid = UUIDField(unique=True)
     is_deleted = BooleanField(default=False)
-    user_folder = ReferenceField(UserFolder, dbref=True)
+    user_folder_id = ReferenceField(UserFolder, dbref=True)
     user_id = ReferenceField(User, dbref=True)
