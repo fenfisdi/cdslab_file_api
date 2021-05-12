@@ -1,5 +1,5 @@
-from .folder import UserFolderUseCase
+from .file import FileUseCase
 from .identifier import IdentifierUseCase
 from .security import SecurityUseCase
 
-__all__ = ['SecurityUseCase', 'IdentifierUseCase', 'UserFolderUseCase']
+__all__ = ['SecurityUseCase', 'IdentifierUseCase', 'FileUseCase']
