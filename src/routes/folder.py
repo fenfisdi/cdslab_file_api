@@ -6,6 +6,7 @@ from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 from src.interfaces import SimulationFolderInterface, UserFolderInterface
 from src.models.db import UserFolder, SimulationFolder
 from src.use_cases import SecurityUseCase, IdentifierUseCase
+from src.utils.encoder import BsonObject
 from src.utils.messages import FolderMessage
 from src.utils.response import UJSONResponse
 
@@ -51,17 +52,18 @@ def create_simulation_folder(
         return UJSONResponse(FolderMessage.exist, HTTP_400_BAD_REQUEST)
 
     simulation_folder = SimulationFolder(
-        uuid=IdentifierUseCase.create_identifier(),
-        simulation_id=uuid,
-        user_folder=user_folder,
+        simulation_uuid=uuid,
+        user_folder_id=user_folder,
         user_id=user
     )
-
-    # TODO: Create Simulation Folder
 
     try:
         simulation_folder.save()
     except Exception as error:
         return UJSONResponse(str(error), HTTP_400_BAD_REQUEST)
 
-    return UJSONResponse(FolderMessage.created, HTTP_201_CREATED)
+    return UJSONResponse(
+        FolderMessage.created,
+        HTTP_201_CREATED,
+        BsonObject.dict(simulation_folder)
+    )
