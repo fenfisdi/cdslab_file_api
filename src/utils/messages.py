@@ -15,6 +15,7 @@ class FolderMessage:
 
 @dataclass
 class FileMessage:
+    invalid: str = 'Invalid file extension'
     deleted: str = 'File deleted'
     not_found: str = 'File not found'
     found: str = 'File found'

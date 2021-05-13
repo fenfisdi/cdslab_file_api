@@ -13,8 +13,7 @@ from starlette.status import (
 from src.interfaces import SimulationFileInterface, SimulationFolderInterface
 from src.models.db import FileSimulation
 from src.models.general import TypeFile
-from src.use_cases import FileUseCase
-from src.use_cases import IdentifierUseCase, SecurityUseCase
+from src.use_cases import FileUseCase, IdentifierUseCase, SecurityUseCase
 from src.utils.encoder import BsonObject
 from src.utils.messages import FileMessage, FolderMessage
 from src.utils.response import UJSONResponse
@@ -24,10 +23,10 @@ file_routes = APIRouter(tags=['File'])
 
 @file_routes.post('/simulation/{uuid}/file')
 def upload_file(
-        uuid: UUID,
-        file_type: TypeFile = TypeFile.UPLOAD,
-        file: UploadFile = File(...),
-        user=Depends(SecurityUseCase.validate)
+    uuid: UUID,
+    file_type: TypeFile = TypeFile.UPLOAD,
+    file: UploadFile = File(...),
+    user=Depends(SecurityUseCase.validate)
 ):
     """
 
@@ -36,6 +35,8 @@ def upload_file(
     :param file:
     :param user:
     """
+    if not FileUseCase.validate_file(file.filename):
+        return UJSONResponse(FileMessage.invalid, HTTP_400_BAD_REQUEST)
     folder = SimulationFolderInterface.find_one_by_simulation(uuid, user)
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
@@ -54,7 +55,7 @@ def upload_file(
         return UJSONResponse(str(error), HTTP_400_BAD_REQUEST)
 
     return UJSONResponse(
-        FileMessage.can_not_save,
+        FileMessage.saved,
         HTTP_201_CREATED,
         BsonObject.dict(simulation_file)
     )
@@ -81,9 +82,9 @@ def list_files(simulation_uuid: UUID, user=Depends(SecurityUseCase.validate)):
 
 @file_routes.get('/simulation/{simulation_uuid}/file/{file_uuid}')
 def find_file(
-        simulation_uuid: UUID,
-        file_uuid: UUID,
-        user=Depends(SecurityUseCase.validate)
+    simulation_uuid: UUID,
+    file_uuid: UUID,
+    user=Depends(SecurityUseCase.validate)
 ):
     simulation_folder = SimulationFolderInterface.find_one_by_simulation(
         simulation_uuid,
@@ -108,16 +109,16 @@ def find_file(
 
     return StreamingResponse(
         file,
-        media_type='application/jpeg',
+        media_type='text/plain',
         headers=headers
     )
 
 
 @file_routes.delete('/simulation/{simulation_uuid}/file/{file_uuid}')
 def delete_file(
-        simulation_uuid: UUID,
-        file_uuid: UUID,
-        user=Depends(SecurityUseCase.validate)
+    simulation_uuid: UUID,
+    file_uuid: UUID,
+    user=Depends(SecurityUseCase.validate)
 ):
     simulation_folder = SimulationFolderInterface.find_one_by_simulation(
         simulation_uuid,
