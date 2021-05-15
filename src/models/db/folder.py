@@ -1,9 +1,7 @@
-from mongoengine import (
-    UUIDField,
-    ReferenceField,
-    BooleanField
-)
+from mongoengine import (BooleanField, EnumField, FileField, ReferenceField,
+                         StringField, UUIDField)
 
+from src.models.general import TypeFile
 from .base import BaseDocument
 from .user import User
 
@@ -19,3 +17,12 @@ class SimulationFolder(BaseDocument):
     is_deleted = BooleanField(default=False)
     user_folder_id = ReferenceField(UserFolder, dbref=True)
     user_id = ReferenceField(User, dbref=True)
+
+
+class FileSimulation(BaseDocument):
+    uuid = UUIDField(unique=True)
+    name = StringField()
+    ext = StringField(null=True)
+    type = EnumField(TypeFile)
+    simulation_folder_id = ReferenceField(SimulationFolder, dbref=True)
+    file = FileField()

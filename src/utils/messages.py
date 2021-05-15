@@ -8,5 +8,17 @@ class SecurityMessage:
 
 @dataclass
 class FolderMessage:
-    created: str = 'Folder Created'
+    created: str = 'Folder created'
     exist: str = 'Folder exist'
+    not_found: str = 'Folder not found'
+    deleted: str = 'Folder deleted'
+
+
+@dataclass
+class FileMessage:
+    invalid: str = 'Invalid file extension'
+    deleted: str = 'File deleted'
+    not_found: str = 'File not found'
+    found: str = 'File found'
+    saved: str = 'File saved'
+    can_not_save: str = 'File cannot save'
