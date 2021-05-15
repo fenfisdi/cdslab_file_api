@@ -11,6 +11,7 @@ class FolderMessage:
     created: str = 'Folder created'
     exist: str = 'Folder exist'
     not_found: str = 'Folder not found'
+    deleted: str = 'Folder deleted'
 
 
 @dataclass

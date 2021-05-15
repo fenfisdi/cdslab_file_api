@@ -24,3 +24,13 @@ class SimulationFileInterface:
             uuid=uuid
         )
         return FileSimulation.objects(**filters).first()
+
+
+class RootSimulationFileInterface:
+
+    @classmethod
+    def find_all_files(cls, simulation: SimulationFolder):
+        filters = dict(
+            simulation_folder_id=simulation
+        )
+        return FileSimulation.objects(**filters).all()
