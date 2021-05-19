@@ -5,6 +5,7 @@ from .folder import (
     UserFolderInterface
 )
 from .user import UserInterface
+from .scrapping import scrappingInterface
 
 __all__ = [
     'SimulationFolderInterface',
@@ -12,5 +13,6 @@ __all__ = [
     'UserInterface',
     'SimulationFileInterface',
     'RootSimulationFileInterface',
-    'RootSimulationFolderInterface'
+    'RootSimulationFolderInterface',
+    'scrappingInterface'
 ]

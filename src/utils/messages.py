@@ -22,3 +22,8 @@ class FileMessage:
     found: str = 'File found'
     saved: str = 'File saved'
     can_not_save: str = 'File cannot save'
+
+@dataclass
+class ScrappingMessage:
+    found: str = 'Region found'
+    create: str = 'Hash has been created'
