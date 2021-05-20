@@ -54,12 +54,12 @@ def region_name(hash: str = None):
 
 @scrapping_routes.get('/scrapping/hash')
 def has_region(region: str):
-    id = sha256(f"{region}".encode('utf-8')).hexdigest()
+    hash_region = sha256(f"{region}".encode('utf-8')).hexdigest()
     
     return UJSONResponse(
         ScrappingMessage.create,
         HTTP_200_OK,
-        id
+        hash_region
     )
 
 @scrapping_routes.post('/scrapping/Data')
