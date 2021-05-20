@@ -54,16 +54,16 @@ def region_name(hash: str = None):
 
 @scrapping_routes.get('/scrapping/hash')
 def has_region(region: str):
-    hash = sha256(f"{region}".encode('utf-8')).hexdigest()
+    id = sha256(f"{region}".encode('utf-8')).hexdigest()
     
     return UJSONResponse(
         ScrappingMessage.create,
         HTTP_200_OK,
-        hash
+        id
     )
 
 @scrapping_routes.post('/scrapping/Data')
-def insert_INSData(data: Data):
+def insert_ins_data(data: Data):
     data_found = ScrappingInterface.find_one_data(data.file_id)
 
     if data_found:
@@ -78,7 +78,7 @@ def insert_INSData(data: Data):
     
 
 @scrapping_routes.get('/scrapping/Data')
-def get_INSData(file_id: str):
+def get_ins_data(file_id: str):
     data_found = ScrappingInterface.find_one_data(file_id)
 
     if not data_found:
