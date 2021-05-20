@@ -4,7 +4,7 @@ from mongoengine import (
         DateTimeField, 
         BooleanField)
 
-class SimulationRegister(BaseDocument):
+class INSData(BaseDocument):
     file_id = StringField(required=True)
     path = StringField(required=True)
     region = StringField(required=True)

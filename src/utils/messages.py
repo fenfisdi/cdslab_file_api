@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-
 @dataclass
 class SecurityMessage:
     invalid_token: str = 'Invalid Token'
@@ -26,4 +25,8 @@ class FileMessage:
 @dataclass
 class ScrappingMessage:
     found: str = 'Region found'
+    not_found: str = 'Region not found'
     create: str = 'Hash has been created'
+    insert: str = 'Data has been inserted'
+    exist: str = 'Data exist'
+    not_exist: str = 'Data not exist'
