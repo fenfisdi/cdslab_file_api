@@ -42,7 +42,8 @@ class BsonObject:
     @classmethod
     def __filter_keys(cls, data: dict) -> dict:
         invalid_keys = {
-            "_id", "_cls", "inserted_at", "updated_at", "is_deleted"
+            "_id", "_cls", "inserted_at", "updated_at", "is_deleted",
+            "path"
         }
 
         for k in data.copy().keys():

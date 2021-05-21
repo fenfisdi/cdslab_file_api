@@ -39,7 +39,7 @@ def create_user_folder(user=Depends(SecurityUseCase.validate)):
 def create_simulation_folder(
     uuid: UUID,
     user=Depends(SecurityUseCase.validate)
-):
+    ):
     user_folder = UserFolderInterface.find_one_by_user(user)
     if not user_folder:
         return UJSONResponse(FolderMessage.exist, HTTP_400_BAD_REQUEST)

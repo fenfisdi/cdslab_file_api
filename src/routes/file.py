@@ -27,7 +27,7 @@ def upload_file(
     file_type: TypeFile = TypeFile.UPLOAD,
     file: UploadFile = File(...),
     user=Depends(SecurityUseCase.validate)
-):
+    ):
     """
 
     :param uuid:
@@ -85,7 +85,7 @@ def find_file(
     simulation_uuid: UUID,
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
-):
+    ):
     simulation_folder = SimulationFolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
@@ -119,7 +119,7 @@ def delete_file(
     simulation_uuid: UUID,
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
-):
+    ):
     simulation_folder = SimulationFolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
