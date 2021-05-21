@@ -103,9 +103,7 @@ def find_file(
         return UJSONResponse(FileMessage.not_found, HTTP_404_NOT_FOUND)
 
     file = BytesIO(file_simulation.file.read())
-    headers = {
-        'Content-Disposition': f'attachment,filename={file_simulation.name}',
-    }
+    headers = {}
 
     return StreamingResponse(
         file,
