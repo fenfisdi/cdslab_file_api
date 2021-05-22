@@ -5,7 +5,7 @@ class FileUseCase:
 
     @classmethod
     def validate_file(cls, filename: str) -> bool:
-        allowed_files = {'csv', 'parquet', 'pickle', 'feather'}
+        allowed_files = {'csv', 'parquet', 'pickle', 'feather', 'png'}
 
         extension_file = cls.get_file_extension(filename)
 

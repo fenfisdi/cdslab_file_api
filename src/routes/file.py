@@ -10,7 +10,7 @@ from starlette.status import (
     HTTP_404_NOT_FOUND
 )
 
-from src.interfaces import SimulationFileInterface, SimulationFolderInterface
+from src.interfaces import FolderInterface, SimulationFileInterface
 from src.models.db import FileSimulation
 from src.models.general import TypeFile
 from src.use_cases import FileUseCase, IdentifierUseCase, SecurityUseCase
@@ -37,7 +37,8 @@ def upload_file(
     """
     if not FileUseCase.validate_file(file.filename):
         return UJSONResponse(FileMessage.invalid, HTTP_400_BAD_REQUEST)
-    folder = SimulationFolderInterface.find_one_by_simulation(uuid, user)
+
+    folder = FolderInterface.find_one_by_simulation(uuid, user)
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
 
@@ -68,7 +69,7 @@ def list_files(simulation_uuid: UUID, user=Depends(SecurityUseCase.validate)):
     :param simulation_uuid:
     :param user:
     """
-    simulation = SimulationFolderInterface.find_one_by_simulation(
+    simulation = FolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
     )
@@ -85,8 +86,8 @@ def find_file(
     simulation_uuid: UUID,
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
-    ):
-    simulation_folder = SimulationFolderInterface.find_one_by_simulation(
+):
+    simulation_folder = FolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
     )
@@ -117,8 +118,8 @@ def delete_file(
     simulation_uuid: UUID,
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
-    ):
-    simulation_folder = SimulationFolderInterface.find_one_by_simulation(
+):
+    simulation_folder = FolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
     )
