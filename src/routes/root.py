@@ -10,13 +10,17 @@ from starlette.status import (
     HTTP_404_NOT_FOUND
 )
 
-from src.interfaces import (FolderInterface, RootSimulationFileInterface,
-                            RootSimulationFolderInterface, UserInterface)
-from src.models.db import FileSimulation, SimulationFolder, User
+from src.interfaces import (
+    FolderInterface,
+    RootSimulationFileInterface,
+    RootSimulationFolderInterface,
+    UserInterface
+)
+from src.models.db import SimulationFolder, User
 from src.models.general import TypeFile
 from src.models.routes import NewFolder
 from src.services import UserAPI
-from src.use_cases import FileUseCase, IdentifierUseCase
+from src.use_cases import FileUseCase, SaveFileUseCase
 from src.utils.encoder import BsonObject
 from src.utils.messages import FileMessage, FolderMessage
 from src.utils.response import UJSONResponse
@@ -110,24 +114,8 @@ def upload_simulation_file(
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
 
-    simulation_file = FileSimulation(
-        uuid=IdentifierUseCase.create_identifier(),
-        name=file.filename,
-        ext=FileUseCase.get_file_extension(file.filename),
-        file=file.file.read(),
-        type=file_type,
-        simulation_folder_id=folder,
-    )
-    try:
-        simulation_file.save()
-    except Exception as error:
-        return UJSONResponse(str(error), HTTP_400_BAD_REQUEST)
-
-    return UJSONResponse(
-        FileMessage.saved,
-        HTTP_201_CREATED,
-        BsonObject.dict(simulation_file)
-    )
+    response, _ = SaveFileUseCase.handle(folder, file_type, file)
+    return response
 
 
 @root_routes.get('/simulation/{uuid}/file')

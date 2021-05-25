@@ -5,15 +5,13 @@ from fastapi import APIRouter, Depends, File, UploadFile
 from fastapi.responses import StreamingResponse
 from starlette.status import (
     HTTP_200_OK,
-    HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST,
     HTTP_404_NOT_FOUND
 )
 
 from src.interfaces import FolderInterface, SimulationFileInterface
-from src.models.db import FileSimulation
 from src.models.general import TypeFile
-from src.use_cases import FileUseCase, IdentifierUseCase, SecurityUseCase
+from src.use_cases import FileUseCase, SaveFileUseCase, SecurityUseCase
 from src.utils.encoder import BsonObject
 from src.utils.messages import FileMessage, FolderMessage
 from src.utils.response import UJSONResponse
@@ -27,8 +25,8 @@ def upload_file(
     file_type: TypeFile = TypeFile.UPLOAD,
     file: UploadFile = File(...),
     user=Depends(SecurityUseCase.validate)
-    ):
-    """
+):
+    """src/models/db/__init__.py
 
     :param uuid:
     :param file_type:
@@ -42,24 +40,8 @@ def upload_file(
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
 
-    simulation_file = FileSimulation(
-        uuid=IdentifierUseCase.create_identifier(),
-        name=file.filename,
-        ext=FileUseCase.get_file_extension(file.filename),
-        file=file.file.read(),
-        type=file_type,
-        simulation_folder_id=folder,
-    )
-    try:
-        simulation_file.save()
-    except Exception as error:
-        return UJSONResponse(str(error), HTTP_400_BAD_REQUEST)
-
-    return UJSONResponse(
-        FileMessage.saved,
-        HTTP_201_CREATED,
-        BsonObject.dict(simulation_file)
-    )
+    response, _ = SaveFileUseCase.handle(folder, file_type, file)
+    return response
 
 
 @file_routes.get('/simulation/{simulation_uuid}/file')
