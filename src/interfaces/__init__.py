@@ -1,15 +1,10 @@
 from .file import RootSimulationFileInterface, SimulationFileInterface
-from .folder import (
-    RootSimulationFolderInterface,
-    SimulationFolderInterface,
-    UserFolderInterface
-)
+from .folder import FolderInterface, RootSimulationFolderInterface
 from .user import UserInterface
 from .scrapping import ScrappingInterface
 
 __all__ = [
-    'SimulationFolderInterface',
-    'UserFolderInterface',
+    'FolderInterface',
     'UserInterface',
     'SimulationFileInterface',
     'RootSimulationFileInterface',
