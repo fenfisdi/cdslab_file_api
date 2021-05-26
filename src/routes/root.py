@@ -106,7 +106,8 @@ def delete_simulation_files(simulation_id: UUID):
 def upload_simulation_file(
         simulation_uuid: UUID,
         file_type: TypeFile = TypeFile.UPLOAD,
-        file: UploadFile = File(...)
+        file: UploadFile = File(...),
+        json: UploadFile = File(None)
 ):
     if not FileUseCase.validate_file(file.filename):
         return UJSONResponse(FileMessage.invalid, HTTP_400_BAD_REQUEST)
@@ -114,7 +115,7 @@ def upload_simulation_file(
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
 
-    response, _ = SaveFileUseCase.handle(folder, file_type, file)
+    response, _ = SaveFileUseCase.handle(folder, file_type, file, json)
     return response
 
 

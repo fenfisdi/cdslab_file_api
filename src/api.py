@@ -7,10 +7,11 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from src.config import fastApiConfig
 from src.db import MongoEngine
 from src.routes import (
-        file_routes, 
-        folder_routes, 
-        root_routes, 
-        scrapping_routes)
+    file_routes,
+    folder_routes,
+    root_routes,
+    scrapping_routes
+)
 
 db = MongoEngine().get_connection()
 app = FastAPI(**fastApiConfig)
