@@ -1,10 +1,11 @@
-from .folder import FileSimulation, SimulationFolder, UserFolder
-from .user import User
+from .folder import FileSimulation, SimulationFolder
 from .scrapping import INSData, Region
+from .user import User
 
-__all__ = ['User', 
-        'UserFolder', 
-        'SimulationFolder', 
-        'FileSimulation', 
-        'INSData',
-        'Region']
+__all__ = [
+    'User',
+    'SimulationFolder',
+    'FileSimulation',
+    'INSData',
+    'Region'
+]

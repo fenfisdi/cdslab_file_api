@@ -1,4 +1,4 @@
-from mongoengine import StringField, BooleanField
+from mongoengine import BooleanField, StringField
 
 from .base import BaseDocument
 

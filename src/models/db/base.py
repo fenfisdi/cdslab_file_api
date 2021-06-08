@@ -1,4 +1,4 @@
-from mongoengine import Document, DateTimeField
+from mongoengine import DateTimeField, Document
 
 from src.utils.date_time import DateTime
 
