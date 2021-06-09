@@ -31,9 +31,8 @@ root_routes = APIRouter(prefix='/root', tags=['root'], include_in_schema=False)
 @root_routes.post('/folder')
 def create_simulation_folder(folder: NewFolder):
     """
-
-    :param folder:
-    :return:
+    Create a folder for the simulation
+    :param folder: folder information
     """
     user = UserInterface.find_one(folder.email)
     if not user:
@@ -74,8 +73,8 @@ def create_simulation_folder(folder: NewFolder):
 @root_routes.post('/simulation/{simulation_id}')
 def delete_simulation_files(simulation_id: UUID):
     """
-
-    :param simulation_id:
+    Delete a simulation
+    :param simulation_id: Simulation uuid
     """
     simulation_folder = RootSimulationFolderInterface.find_one_by_simulation(
         simulation_id
@@ -108,6 +107,11 @@ def upload_simulation_file(
         file_type: TypeFile = TypeFile.UPLOAD,
         file: UploadFile = File(...)
 ):
+    """
+    Upload a simulation file
+    :param simulation_uuid: Simulation id
+    :param file_type:     
+    """
     if not FileUseCase.validate_file(file.filename):
         return UJSONResponse(FileMessage.invalid, HTTP_400_BAD_REQUEST)
     folder = RootSimulationFolderInterface.find_one_by_simulation(simulation_uuid)
@@ -120,6 +124,10 @@ def upload_simulation_file(
 
 @root_routes.get('/simulation/{uuid}/file')
 def list_simulation_file(uuid: UUID):
+    """
+    Show all files in a folder
+    :param uuid: folder id
+    """
     folder = RootSimulationFolderInterface.find_one_by_simulation(uuid)
     if not folder:
         return UJSONResponse(FolderMessage.not_found, HTTP_404_NOT_FOUND)
@@ -137,6 +145,12 @@ def list_simulation_file(uuid: UUID):
 
 @root_routes.get('/simulation/{simulation_uuid}/file/{uuid}')
 def find_simulation_file(simulation_uuid: UUID, uuid: UUID):
+    """
+    Search for a simulation file
+
+    :param simulation_uuid:simulation id
+    :param uuid: file id
+    """
     folder = RootSimulationFolderInterface.find_one_by_simulation(
         simulation_uuid
     )

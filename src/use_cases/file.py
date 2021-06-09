@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Tuple
 
 from fastapi import UploadFile
 from starlette.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
@@ -15,6 +15,10 @@ class FileUseCase:
 
     @classmethod
     def validate_file(cls, filename: str) -> bool:
+        """
+        validate file types 
+        :param filename: filename
+        """
         allowed_files = {'csv', 'parquet', 'pickle', 'feather', 'png', 'jpeg'}
 
         extension_file = cls.get_file_extension(filename)
@@ -25,6 +29,11 @@ class FileUseCase:
 
     @classmethod
     def get_file_extension(cls, filename: str) -> Optional[str]:
+        """
+        get the file extension
+        
+        :param filename: filename
+        """
         split_filename = filename.split('.')
         index_name = -2 if len(split_filename) > 1 else 0
         if split_filename[index_name] == split_filename[-1]:
@@ -40,7 +49,14 @@ class SaveFileUseCase:
         folder: SimulationFolder,
         file_type: TypeFile,
         file: UploadFile
-    ) -> (UJSONResponse, bool):
+    ) -> Tuple(UJSONResponse, bool):
+        """
+        save simulation information
+
+        :param folder: folder information
+        :param file_type: file type
+        :param file: file  
+        """
         simulation_file = FileSimulation(
             uuid=IdentifierUseCase.create_identifier(),
             name=file.filename,

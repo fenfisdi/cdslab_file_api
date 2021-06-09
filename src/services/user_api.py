@@ -7,6 +7,9 @@ from .service import API, APIService
 
 
 class UserAPI:
+    """
+    Class to make requests to use API
+    """
     api_url = environ.get('USER_API')
     request = APIService(API(api_url))
 
@@ -17,6 +20,13 @@ class UserAPI:
         is_valid: bool = True,
         is_enabled: bool = True
     ) -> Tuple[Union[dict, UJSONResponse], bool]:
+        """
+        Find a user
+        
+        :param email: user email
+        :param is_valid: user status
+        :param is_enabled:  user enabled
+        """
         parameters = {
             'is_valid': is_valid,
             'is_enabled': is_enabled,

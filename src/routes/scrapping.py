@@ -17,6 +17,10 @@ scrapping_routes = APIRouter(tags=['scrapping'])
 
 @scrapping_routes.get('/scrapping/dates')
 def dates_valid(file_id: str):
+    """
+    Find valid dates for a region
+    :param file_id: file id
+    """
     data = ScrappingInterface.find_one_data(file_id)
 
     if not data:
@@ -39,7 +43,10 @@ def dates_valid(file_id: str):
 
 @scrapping_routes.get('/scrapping/regions')
 def region_name(hash: str = None):
-    
+    """
+    Search regions
+    :param hash: region hash
+    """
     if hash is None:
         regions = ScrappingInterface.find_all()
     else:
@@ -54,6 +61,10 @@ def region_name(hash: str = None):
 
 @scrapping_routes.get('/scrapping/hash')
 def has_region(region: str):
+    """
+    create the hash for a region
+    :param region: region name
+    """
     hash_region = sha256(f"{region}".encode('utf-8')).hexdigest()
     
     return UJSONResponse(
@@ -64,6 +75,11 @@ def has_region(region: str):
 
 @scrapping_routes.post('/scrapping/Data')
 def insert_ins_data(data: Data):
+    """
+    Save file data 
+
+    :param data: file data
+    """
     data_found = ScrappingInterface.find_one_data(data.file_id)
 
     if data_found:
@@ -79,6 +95,10 @@ def insert_ins_data(data: Data):
 
 @scrapping_routes.get('/scrapping/Data')
 def get_ins_data(file_id: str):
+    """
+    get the data from a file
+    param file_id: file id
+    """
     data_found = ScrappingInterface.find_one_data(file_id)
 
     if not data_found:

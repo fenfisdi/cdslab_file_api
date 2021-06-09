@@ -28,10 +28,10 @@ def upload_file(
 ):
     """src/models/db/__init__.py
 
-    :param uuid:
-    :param file_type:
-    :param file:
-    :param user:
+    :param uuid: simulation uuid
+    :param file_type: file type
+    :param file: file to upload 
+    :param user: user information
     """
     if not FileUseCase.validate_file(file.filename):
         return UJSONResponse(FileMessage.invalid, HTTP_400_BAD_REQUEST)
@@ -47,7 +47,7 @@ def upload_file(
 @file_routes.get('/simulation/{simulation_uuid}/file')
 def list_files(simulation_uuid: UUID, user=Depends(SecurityUseCase.validate)):
     """
-
+    Show files
     :param simulation_uuid:
     :param user:
     """
@@ -69,6 +69,13 @@ def find_file(
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
 ):
+    """
+    Search the files 
+
+    :param uuid: simulation uuid
+    :param file_type: file type
+    :param user: user information   
+    """
     simulation_folder = FolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
@@ -101,6 +108,12 @@ def delete_file(
     file_uuid: UUID,
     user=Depends(SecurityUseCase.validate)
 ):
+    """
+    Delete a simulation
+    :param simulation_uuid: simulation uuid
+    :param file_uuid: file uuid
+    :param user: user information
+    """
     simulation_folder = FolderInterface.find_one_by_simulation(
         simulation_uuid,
         user
