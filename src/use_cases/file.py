@@ -49,7 +49,7 @@ class SaveFileUseCase:
         folder: SimulationFolder,
         file_type: TypeFile,
         file: UploadFile
-    ) -> Tuple(UJSONResponse, bool):
+    ) -> Tuple[UJSONResponse, bool]:
         """
         save simulation information
 

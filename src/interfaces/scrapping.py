@@ -10,7 +10,7 @@ class ScrappingInterface:
         Find a region in BD
         :param hash: hash region
         """
-        search = dict(has=hash)
+        search = dict(hash=hash)
         return Region.objects(**search).first()
 
     @classmethod
@@ -29,4 +29,4 @@ class ScrappingInterface:
         :param file_id: file id
         """
         search = dict(file_id=file_id)
-        return INSData.objects(**search).all()
+        return INSData.objects(**search).first()
