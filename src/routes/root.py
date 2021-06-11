@@ -32,6 +32,7 @@ root_routes = APIRouter(prefix='/root', tags=['root'], include_in_schema=False)
 def create_simulation_folder(folder: NewFolder):
     """
     Create a folder for the simulation
+
     :param folder: folder information
     """
     user = UserInterface.find_one(folder.email)
@@ -74,6 +75,7 @@ def create_simulation_folder(folder: NewFolder):
 def delete_simulation_files(simulation_id: UUID):
     """
     Delete a simulation
+
     :param simulation_id: Simulation uuid
     """
     simulation_folder = RootSimulationFolderInterface.find_one_by_simulation(
@@ -109,6 +111,7 @@ def upload_simulation_file(
 ):
     """
     Upload a simulation file
+
     :param simulation_uuid: Simulation id
     :param file_type:     
     """
@@ -126,6 +129,7 @@ def upload_simulation_file(
 def list_simulation_file(uuid: UUID):
     """
     Show all files in a folder
+    
     :param uuid: folder id
     """
     folder = RootSimulationFolderInterface.find_one_by_simulation(uuid)

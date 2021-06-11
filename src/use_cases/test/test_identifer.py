@@ -1,5 +1,6 @@
-from unittest import TestCase
 from uuid import UUID
+from unittest import TestCase
+
 from src.use_cases.identifier import IdentifierUseCase
 
 class IdentifierUseCaseTestCase(TestCase):

@@ -4,14 +4,15 @@ from starlette.status import (
     HTTP_201_CREATED, 
     HTTP_400_BAD_REQUEST, 
     HTTP_200_OK, 
-    HTTP_404_NOT_FOUND)
+    HTTP_404_NOT_FOUND
+)
 
 from src.utils.encoder import BsonObject
 from src.utils.messages import ScrappingMessage
 from src.utils.response import UJSONResponse
 from src.interfaces.scrapping import ScrappingInterface
 from src.models.routes.ins_data import Data
-from src.models.db.scrapping import INSData, Region
+from src.models.db.scrapping import INSData
 
 scrapping_routes = APIRouter(tags=['scrapping'])
 
@@ -19,6 +20,7 @@ scrapping_routes = APIRouter(tags=['scrapping'])
 def dates_valid(file_id: str):
     """
     Find valid dates for a region
+
     :param file_id: file id
     """
     data = ScrappingInterface.find_one_data(file_id)
@@ -45,6 +47,7 @@ def dates_valid(file_id: str):
 def region_name(hash: str = None):
     """
     Search regions
+
     :param hash: region hash
     """
     if hash is None:
@@ -63,6 +66,7 @@ def region_name(hash: str = None):
 def has_region(region: str):
     """
     create the hash for a region
+
     :param region: region name
     """
     hash_region = sha256(f"{region}".encode('utf-8')).hexdigest()
@@ -97,6 +101,7 @@ def insert_ins_data(data: Data):
 def get_ins_data(file_id: str):
     """
     get the data from a file
+
     param file_id: file id
     """
     data_found = ScrappingInterface.find_one_data(file_id)

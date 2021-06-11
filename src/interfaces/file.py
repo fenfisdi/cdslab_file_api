@@ -12,6 +12,7 @@ class SimulationFileInterface:
     def find_all(cls, simulation: SimulationFolder) -> List[FileSimulation]:
         """
         Find all simulation folder
+
         :param simulation: simulation information
         """
         filters = dict(
@@ -27,6 +28,7 @@ class SimulationFileInterface:
     ) -> Optional[FileSimulation]:
         """
         Find one simulation folder
+
         :param simulation: simulation information
         :param uuid: simulation id
         """
@@ -45,6 +47,7 @@ class RootSimulationFileInterface:
     def find_all_files(cls, simulation: SimulationFolder) -> List[FileSimulation]:
         """
         Find all simulations in a folder
+
         :param simulation: folder information
         """
         filters = dict(
@@ -56,6 +59,7 @@ class RootSimulationFileInterface:
     def find_one(cls, folder: SimulationFolder, uuid: UUID):
         """
         Find one simulation in a folder
+        
         :param folder: folder information
         :param uuid: simulation id
         """

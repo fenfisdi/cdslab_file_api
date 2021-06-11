@@ -1,7 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch, Mock
+
 from fastapi.testclient import TestClient
-from hashlib import sha256
+
 
 
 def solve_path(path: str):
