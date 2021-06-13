@@ -86,6 +86,7 @@ def find_file(
         return UJSONResponse(FileMessage.not_found, HTTP_404_NOT_FOUND)
 
     file = BytesIO(file_simulation.file.read())
+
     headers = {}
 
     return StreamingResponse(

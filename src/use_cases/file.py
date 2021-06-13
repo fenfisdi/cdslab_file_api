@@ -15,7 +15,7 @@ class FileUseCase:
 
     @classmethod
     def validate_file(cls, filename: str) -> bool:
-        allowed_files = {'csv', 'parquet', 'pickle', 'feather', 'png', 'jpeg'}
+        allowed_files = {'csv', 'html'}
 
         extension_file = cls.get_file_extension(filename)
 
@@ -39,13 +39,15 @@ class SaveFileUseCase:
         cls,
         folder: SimulationFolder,
         file_type: TypeFile,
-        file: UploadFile
+        file: UploadFile,
+        json: UploadFile = None
     ) -> (UJSONResponse, bool):
         simulation_file = FileSimulation(
             uuid=IdentifierUseCase.create_identifier(),
             name=file.filename,
             ext=FileUseCase.get_file_extension(file.filename),
             file=file.file.read(),
+            json_image=json.file.read() if json else "",
             type=file_type,
             simulation_folder_id=folder,
         )
