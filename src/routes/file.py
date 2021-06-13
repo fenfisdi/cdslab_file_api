@@ -22,7 +22,7 @@ file_routes = APIRouter(tags=['File'])
 @file_routes.post('/simulation/{uuid}/file')
 def upload_file(
     uuid: UUID,
-    file_type: TypeFile = TypeFile.UPLOAD,
+    file_type: TypeFile = TypeFile.UPLOADED,
     file: UploadFile = File(...),
     user=Depends(SecurityUseCase.validate)
 ):

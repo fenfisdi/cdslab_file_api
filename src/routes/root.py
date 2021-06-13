@@ -105,7 +105,7 @@ def delete_simulation_files(simulation_id: UUID):
 @root_routes.post('/simulation/{simulation_uuid}/file')
 def upload_simulation_file(
         simulation_uuid: UUID,
-        file_type: TypeFile = TypeFile.UPLOAD,
+        file_type: TypeFile = TypeFile.UPLOADED,
         file: UploadFile = File(...),
         json: UploadFile = File(None)
 ):
