@@ -27,8 +27,8 @@ def dates_valid(file_id: str):
         )
 
     dates_region = {
-        'initialDate': data.init_date.strftime("%d/%m/%Y"),
-        'finalDate': data.final_date.strftime("%d/%m/%Y")
+        'initialDate': data.init_date.isoformat(),
+        'finalDate': data.final_date.isoformat()
     }
     
     return UJSONResponse(
