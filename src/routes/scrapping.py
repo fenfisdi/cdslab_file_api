@@ -4,7 +4,8 @@ from starlette.status import (
     HTTP_201_CREATED, 
     HTTP_400_BAD_REQUEST, 
     HTTP_200_OK, 
-    HTTP_404_NOT_FOUND)
+    HTTP_404_NOT_FOUND
+)
 
 from src.utils.encoder import BsonObject
 from src.utils.messages import ScrappingMessage
@@ -26,8 +27,8 @@ def dates_valid(file_id: str):
         )
 
     dates_region = {
-        'init_date': data.init_date,
-        'final_date': data.final_date,
+        'initialDate': data.init_date.strftime("%d/%m/%Y"),
+        'finalDate': data.final_date.strftime("%d/%m/%Y")
     }
     
     return UJSONResponse(
