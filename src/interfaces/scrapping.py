@@ -14,4 +14,4 @@ class ScrappingInterface:
     @classmethod
     def find_one_data(cls, file_id: str):
         search = dict(file_id=file_id)
-        return INSData.objects(**search).all()
+        return INSData.objects(**search).first()
