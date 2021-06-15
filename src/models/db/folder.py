@@ -26,3 +26,7 @@ class FileSimulation(BaseDocument):
     json_image = StringField()
     simulation_folder_id = ReferenceField(SimulationFolder, dbref=True)
     file = FileField()
+
+class SimulationINS(FileSimulation):
+    region = StringField(required=True)
+    variable = StringField(required=True)

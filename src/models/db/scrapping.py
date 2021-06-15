@@ -1,8 +1,7 @@
 from mongoengine import (
     BooleanField, 
     DateTimeField, 
-    StringField,
-    BinaryField
+    StringField
 )
 
 from .base import BaseDocument
@@ -10,7 +9,7 @@ from .base import BaseDocument
 
 class INSData(BaseDocument):
     file_id = StringField(required=True)
-    file = BinaryField(required=True)
+    file = StringField(required=True)
     region = StringField(required=True)
     init_date = DateTimeField(required=True)
     final_date = DateTimeField(required=True)
