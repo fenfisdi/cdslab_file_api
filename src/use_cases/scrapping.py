@@ -29,7 +29,7 @@ class ScrappingUseCase:
             (df["date"] >= str(init_date)) & (df["date"] <= str(final_date))
         ]
 
-        return filter.head(5).to_json()
+        return cls.create_json_df(filter.head(5))
   
     @classmethod
     def save_simulation(
@@ -39,7 +39,7 @@ class ScrappingUseCase:
         final_date: date,
         region_name: str,
         variable: str
-    ):
+      ):
         try:
             file_id = sha256(f"{region_name}".encode('utf-8')).hexdigest()
             data = ScrappingInterface.find_one_data(file_id)
@@ -76,3 +76,29 @@ class ScrappingUseCase:
                 HTTP_400_BAD_REQUEST
             )
         
+    @classmethod
+    def create_json_df(cls, df):
+        
+        columns = [column for column in df.columns]
+        headers = []
+        body=[]
+
+        for name in columns:
+            headers.append(
+                dict(
+                    label=name if not "_" in name else name.replace("_"," ").capitalize(),
+                    name=name
+                )
+            )
+
+        for _, fila in df.iterrows():
+            body.append(
+                {
+                  name:fila[name]  for name in columns
+                }
+            )
+
+        return dict(
+            headers=headers,
+            body=body
+        )
