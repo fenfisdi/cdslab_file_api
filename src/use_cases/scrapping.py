@@ -12,7 +12,7 @@ from starlette.status import (
 from .identifier import IdentifierUseCase
 from src.interfaces.scrapping import ScrappingInterface
 from src.models.general import TypeFile
-from src.models.db import SimulationFolder, SimulationINS
+from src.models.db import SimulationFolder, FileSimulation
 from src.utils.response import UJSONResponse
 from src.utils.encoder import BsonObject
 from src.utils.messages import FileMessage
@@ -49,7 +49,7 @@ class ScrappingUseCase:
                 (df["date"] >= str(init_date)) & (df["date"] <= str(final_date))
             ]
 
-            simulation_file = SimulationINS(
+            simulation_file = FileSimulation(
                 uuid=IdentifierUseCase.create_identifier(),
                 name=f"{file_id}.csv",
                 ext="csv",
