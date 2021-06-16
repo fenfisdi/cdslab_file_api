@@ -29,4 +29,5 @@ class ScrappingMessage:
     create: str = 'Hash has been created'
     insert: str = 'Data has been inserted'
     update: str = 'Data has been updated'
+    exist: str = 'Data found'
     not_exist: str = 'Data not exist'
