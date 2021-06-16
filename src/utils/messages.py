@@ -28,5 +28,5 @@ class ScrappingMessage:
     not_found: str = 'Region not found'
     create: str = 'Hash has been created'
     insert: str = 'Data has been inserted'
-    exist: str = 'Data exist'
+    update: str = 'Data has been updated'
     not_exist: str = 'Data not exist'
