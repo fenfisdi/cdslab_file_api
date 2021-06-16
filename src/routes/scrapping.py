@@ -19,6 +19,7 @@ from src.utils.response import UJSONResponse
 from src.interfaces import FolderInterface
 from src.interfaces.scrapping import ScrappingInterface
 from src.models.routes.ins_data import Data
+from src.models.routes.ins_data import SimulationIns
 from src.models.db.scrapping import INSData
 from src.use_cases.scrapping import ScrappingUseCase
 
@@ -107,34 +108,26 @@ def get_ins_data(file_id: str, init_date: date, final_date: date):
 
 @scrapping_routes.post('/scrapping/simulation/{uuid}')
 def create_simulation(
-    uuid: UUID, 
-    init_date: date, 
-    final_date: date,
-    region_name: str,
-    variable: str,
+    simulation: SimulationIns,
     user=Depends(SecurityUseCase.validate)
 ):
     """
     create a new simulation with ins data
 
     \f
-    :param uuid: folder id
-    :param init_date: simulation init date
-    :param final_date: simulation final date
-    :param region_name: simulation region name
-    :param variable: selected variable
+    :param simulation: simulation info
     """
     try:
-        folder = FolderInterface.find_one_by_simulation(uuid, user)
+        folder = FolderInterface.find_one_by_simulation(simulation.uuid, user)
         if not folder:
             return UJSONResponse(FolderMessage.not_found, HTTP_400_BAD_REQUEST)
 
         return ScrappingUseCase.save_simulation(
             folder,
-            init_date,
-            final_date,
-            region_name,
-            variable
+            simulation.init_date,
+            simulation.final_date,
+            simulation.region_name,
+            simulation.variable
         )
 
     except Exception as error:

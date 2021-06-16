@@ -91,10 +91,10 @@ class ScrappingUseCase:
                 )
             )
 
-        for _, fila in df.iterrows():
+        for _, row in df.iterrows():
             body.append(
                 {
-                  name:fila[name]  for name in columns
+                  name:row[name]  for name in columns
                 }
             )
 
@@ -102,3 +102,4 @@ class ScrappingUseCase:
             headers=headers,
             body=body
         )
+        
