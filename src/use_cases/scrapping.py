@@ -1,21 +1,21 @@
-import pandas as pd
-
-from io import BytesIO
 from datetime import date
 from hashlib import sha256
+from io import BytesIO
 
+import pandas as pd
 from starlette.status import (
-    HTTP_201_CREATED, 
+    HTTP_201_CREATED,
     HTTP_400_BAD_REQUEST
 )
 
-from .identifier import IdentifierUseCase
 from src.interfaces.scrapping import ScrappingInterface
+from src.models.db import FileSimulation, SimulationFolder
 from src.models.general import TypeFile
-from src.models.db import SimulationFolder, FileSimulation
-from src.utils.response import UJSONResponse
 from src.utils.encoder import BsonObject
 from src.utils.messages import FileMessage
+from src.utils.response import UJSONResponse
+from .identifier import IdentifierUseCase
+
 
 class ScrappingUseCase:
 
@@ -40,11 +40,20 @@ class ScrappingUseCase:
         region_name: str,
         variable: str
       ):
+        variable_representation = {
+            "infected": "I",
+            "recovered": "R",
+            "dead": "D",
+        }
+        variable_label = variable_representation.get(variable)
+        assert variable_label, RuntimeError('Variable must be set')
+
         try:
             file_id = sha256(f"{region_name}".encode('utf-8')).hexdigest()
             data = ScrappingInterface.find_one_data(file_id)
             
-            df = pd.read_csv( BytesIO(data.file.encode()))
+            df = pd.read_csv(BytesIO(data.file.encode()))
+            df = df[['date', variable_label]]
             final_file = df[
                 (df["date"] >= str(init_date)) & (df["date"] <= str(final_date))
             ]

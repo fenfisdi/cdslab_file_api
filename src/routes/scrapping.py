@@ -1,27 +1,23 @@
 from datetime import date
-from uuid import UUID
+from hashlib import sha256
 
 from fastapi import APIRouter, Depends
-from hashlib import sha256
 from starlette.status import (
-    HTTP_201_CREATED, 
-    HTTP_400_BAD_REQUEST, 
-    HTTP_200_OK, 
-    HTTP_404_NOT_FOUND,
+    HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND,
     HTTP_500_INTERNAL_SERVER_ERROR
 )
 
-from src.use_cases import SecurityUseCase
-from src.utils.encoder import BsonObject
-from src.utils.messages import ScrappingMessage
-from src.utils.messages import FolderMessage
-from src.utils.response import UJSONResponse
 from src.interfaces import FolderInterface
 from src.interfaces.scrapping import ScrappingInterface
+from src.models.db.scrapping import INSData
 from src.models.routes.ins_data import Data
 from src.models.routes.ins_data import SimulationIns
-from src.models.db.scrapping import INSData
+from src.use_cases import SecurityUseCase
 from src.use_cases.scrapping import ScrappingUseCase
+from src.utils.encoder import BsonObject
+from src.utils.messages import FolderMessage
+from src.utils.messages import ScrappingMessage
+from src.utils.response import UJSONResponse
 
 scrapping_routes = APIRouter(tags=['scrapping'])
 
@@ -116,6 +112,7 @@ def create_simulation(
 
     \f
     :param simulation: simulation info
+    :param user:
     """
     try:
         folder = FolderInterface.find_one_by_simulation(simulation.uuid, user)
