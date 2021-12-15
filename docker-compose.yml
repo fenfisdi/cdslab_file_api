@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+  cdslab_file_app:
+    build: .
+    container_name: cdslab_file_app
+    env_file: .env
+    image: fenfisdi/cdslab_file:dev
+    networks:
+      - cdslab_file_network
+    ports:
+      - 5000:5000
+    volumes:
+    - ./src:/app/src
+
+  cdslab_user_mongo:
+    container_name: cdslab_file_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: cdsuser
+      MONGO_INITDB_ROOT_PASSWORD: cdspass
+    image: mongo:3-xenial
+    networks:
+      - cdslab_file_network
+    ports:
+      - 27017:27017
+    volumes:
+      - /opt/data/cdslab_user/:/data/db
+
+
+networks:
+  cdslab_file_network:
+    name: cdslab_file_network
+    driver: bridge
